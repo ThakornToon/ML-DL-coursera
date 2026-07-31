@@ -7,15 +7,24 @@ The original labs in these courses are taught using Python. However, I prefer wo
 
 ## Status
 **Work in Progress (WIP)**  
-This project is currently in active development as I continue to learn and implement new topics from the courses.
+This project is currently in active development.
 
 ## Current Implementations
 Based on the current progress, the repository includes concepts such as:
-- **Linear Regression** (e.g., `C1W2LinearRegression.java`)
-- **Logistic Regression** (e.g., `C1W3LogisticRegression.java`)
-- **Model Weights I/O** (e.g., `ModelWeightsIO.java` for saving/loading trained weights)
 
-*(More algorithms and neural network models will be add in the future).*
+- **Course 1: Supervised Machine Learning**
+  - **Linear Regression** (`C1W2LinearRegression.java`)
+  - **Logistic Regression** (`C1W3LogisticRegression.java`)
+- **Course 2: Advanced Learning Algorithms**
+  - **Neural Networks (Coffee Roasting)** (`C2W1Lab3CoffeeRoasting.java`)
+- **Custom ML Tools (`ML.tools` Package)**
+  - **Sequential API** (`Sequential.java`): Groups a linear stack of layers into a single model.
+  - **Dense Layer** (`Dense.java`): Represents a fully connected neural network layer with forward/backward propagation.
+  - **Activation Functions** (`Activation.java`): Supports `sigmoid`, `relu`, `linear`.
+  - **Data Normalization** (`Normalization.java`): Z-score normalization for features.
+  - **Model Weights I/O** (`ModelWeightsIO.java`): Unified system for saving and loading model weights (Linear, Logistic, and Neural Networks).
+
+*(More algorithms and neural network models will be added in the future).*
 
 ## Data
 The training data used in these implementations is based on the datasets provided in the official Coursera labs. To run and test these models with the exact same data, you can find the datasets within the respective lab materials on Coursera.
