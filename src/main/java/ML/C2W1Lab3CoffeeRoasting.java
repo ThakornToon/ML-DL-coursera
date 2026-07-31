@@ -122,5 +122,7 @@ public final class C2W1Lab3CoffeeRoasting {
             int yhat = (predictions[i][0] >= 0.5) ? 1 : 0;
             System.out.println("Example " + (i + 1) + ": " + yhat);
         }
+
+        System.out.println("=================================================================\n");
     }
 }

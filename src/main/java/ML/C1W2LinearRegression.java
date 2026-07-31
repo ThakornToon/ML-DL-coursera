@@ -97,6 +97,8 @@ public final class C1W2LinearRegression {
     }
 
     public static void start() {
+        System.out.println("Starting C1W2 LinearRegression");
+
         // Load data using the separate function
         double[][] data = loadData("/C1_W2_Linear_Regression_Data/ex1data1.txt");
         double[] xTrain = data[0];
@@ -147,5 +149,7 @@ public final class C1W2LinearRegression {
 
         double predict2 = 7.0 * w + b;
         System.out.printf("For population = 70,000, we predict a profit of $%.2f\n", (predict2 * 10000));
+
+        System.out.println("=================================================================\n");
     }
 }

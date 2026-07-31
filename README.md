@@ -17,6 +17,7 @@ Based on the current progress, the repository includes concepts such as:
   - **Logistic Regression** (`C1W3LogisticRegression.java`)
 - **Course 2: Advanced Learning Algorithms**
   - **Neural Networks (Coffee Roasting)** (`C2W1Lab3CoffeeRoasting.java`)
+  - **Neural Networks for Handwritten Digit Recognition** (`C2W1Assignment.java`)
 - **Custom ML Tools (`ML.tools` Package)**
   - **Sequential API** (`Sequential.java`): Groups a linear stack of layers into a single model.
   - **Dense Layer** (`Dense.java`): Represents a fully connected neural network layer with forward/backward propagation.

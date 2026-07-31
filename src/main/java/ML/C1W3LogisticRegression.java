@@ -209,6 +209,8 @@ public final class C1W3LogisticRegression {
     }
 
     public static void start() {
+        System.out.println("Starting C1W3 LogisticRegression");
+
         // Load data
         Object[] data = loadData("/C1_W3_Logistic_Regression_Data/ex2data1.txt");
         double[][] xTrain = (double[][]) data[0];
@@ -268,5 +270,6 @@ public final class C1W3LogisticRegression {
         }
         double accuracy = (double) correct / predictions.length * 100.0;
         System.out.printf("Train Accuracy: %.2f%%\n", accuracy);
+        System.out.println("=================================================================\n");
     }
 }
