@@ -257,7 +257,7 @@ public final class C1W3LogisticRegression {
         System.out.printf("b found by gradient descent: %.3f\n\n", b);
 
         // Save the trained weights
-        ModelWeightsIO.saveWeights("c1w3_logistic_weights.txt", w, b);
+        ModelWeightsIO.saveWeights("ml_c1w3_logistic_weights.txt", w, b);
 
 
         // Predict

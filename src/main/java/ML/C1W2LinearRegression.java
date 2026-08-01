@@ -140,7 +140,7 @@ public final class C1W2LinearRegression {
         System.out.println("w,b found by gradient descent: " + w + " " + b + "\n");
 
         // Save the trained weights
-        ModelWeightsIO.saveWeights("c1w2_linear_weights.txt", w, b);
+        ModelWeightsIO.saveWeights("ml_c1w2_linear_weights.txt", w, b);
 
 
         // Predict

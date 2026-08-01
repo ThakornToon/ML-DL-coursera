@@ -150,15 +150,15 @@ public final class C2W2Assignment {
             // Save weights
             Dense layer1 = model.getLayer("layer1");
             if (layer1 != null) {
-                ML.tools.ModelWeightsIO.saveWeights("c2w2_assign_layer1_weights.txt", layer1.getWeightsW(), layer1.getWeightsB());
+                ML.tools.ModelWeightsIO.saveWeights("ml_c2w2_assign_layer1_weights.txt", layer1.getWeightsW(), layer1.getWeightsB());
             }
             Dense layer2 = model.getLayer("layer2");
             if (layer2 != null) {
-                ML.tools.ModelWeightsIO.saveWeights("c2w2_assign_layer2_weights.txt", layer2.getWeightsW(), layer2.getWeightsB());
+                ML.tools.ModelWeightsIO.saveWeights("ml_c2w2_assign_layer2_weights.txt", layer2.getWeightsW(), layer2.getWeightsB());
             }
             Dense layer3 = model.getLayer("layer3");
             if (layer3 != null) {
-                ML.tools.ModelWeightsIO.saveWeights("c2w2_assign_layer3_weights.txt", layer3.getWeightsW(), layer3.getWeightsB());
+                ML.tools.ModelWeightsIO.saveWeights("ml_c2w2_assign_layer3_weights.txt", layer3.getWeightsW(), layer3.getWeightsB());
             }
             
         } catch (IOException e) {

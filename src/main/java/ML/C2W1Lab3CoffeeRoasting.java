@@ -92,12 +92,12 @@ public final class C2W1Lab3CoffeeRoasting {
         // Save weights for each layer
         Dense layer1 = model.getLayer("layer1");
         if (layer1 != null) {
-            ML.tools.ModelWeightsIO.saveWeights("c2w1_layer1_weights.txt", layer1.getWeightsW(), layer1.getWeightsB());
+            ML.tools.ModelWeightsIO.saveWeights("ml_c2w1_layer1_weights.txt", layer1.getWeightsW(), layer1.getWeightsB());
         }
 
         Dense layer2 = model.getLayer("layer2");
         if (layer2 != null) {
-            ML.tools.ModelWeightsIO.saveWeights("c2w1_layer2_weights.txt", layer2.getWeightsW(), layer2.getWeightsB());
+            ML.tools.ModelWeightsIO.saveWeights("ml_c2w1_layer2_weights.txt", layer2.getWeightsW(), layer2.getWeightsB());
         }
 
         // 5. Run prediction on test data
