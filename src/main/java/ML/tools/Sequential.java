@@ -99,18 +99,32 @@ public class Sequential {
             double[][] dA = new double[m][outputSize];
             
             if (outputSize == 1) {
-                // Binary Cross Entropy
-                for (int i = 0; i < m; i++) {
-                    double a = A[i][0];
-                    double y = Y[i][0];
-                    
-                    // Clip a to avoid log(0) and division by zero
-                    a = Math.max(Math.min(a, 1.0 - 1e-15), 1e-15);
-                    
-                    loss += -y * Math.log(a) - (1 - y) * Math.log(1 - a);
-                    
-                    // Derivative of BCE Loss w.r.t Activation:
-                    dA[i][0] = (a - y) / (a * (1.0 - a));
+                String finalActivation = layers.get(layers.size() - 1).getActivation();
+                if (finalActivation.equalsIgnoreCase("linear")) {
+                    // Mean Squared Error (MSE)
+                    for (int i = 0; i < m; i++) {
+                        double a = A[i][0];
+                        double y = Y[i][0];
+                        
+                        loss += Math.pow(a - y, 2) / 2.0;
+                        
+                        // Derivative of MSE Loss w.r.t Activation:
+                        dA[i][0] = (a - y);
+                    }
+                } else {
+                    // Binary Cross Entropy
+                    for (int i = 0; i < m; i++) {
+                        double a = A[i][0];
+                        double y = Y[i][0];
+                        
+                        // Clip a to avoid log(0) and division by zero
+                        a = Math.max(Math.min(a, 1.0 - 1e-15), 1e-15);
+                        
+                        loss += -y * Math.log(a) - (1 - y) * Math.log(1 - a);
+                        
+                        // Derivative of BCE Loss w.r.t Activation:
+                        dA[i][0] = (a - y) / (a * (1.0 - a));
+                    }
                 }
             } else {
                 String finalActivation = layers.get(layers.size() - 1).getActivation();
