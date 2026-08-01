@@ -2,6 +2,7 @@ package ML;
 
 import ML.tools.Dense;
 import ML.tools.Sequential;
+import ML.tools.Metrics;
 
 public class C2W3Assignment {
 
@@ -176,8 +177,8 @@ public class C2W3Assignment {
                 yCvTrue[i] = data.yCv[i][0];
             }
 
-            double trainErr = evaluateMse(yTrainTrue, yTrainHat);
-            double cvErr = evaluateMse(yCvTrue, yCvHat);
+            double trainErr = Metrics.halfMeanSquaredError(yTrainTrue, yTrainHat);
+            double cvErr = Metrics.halfMeanSquaredError(yCvTrue, yCvHat);
 
             System.out.printf("Degree %d | Train MSE: %.2f | CV MSE: %.2f%n", degree, trainErr, cvErr);
             System.out.println();
@@ -190,28 +191,7 @@ public class C2W3Assignment {
         System.out.println("==> The optimal degree is: " + optimalDegree + "\n");
     }
 
-    // Mean Squared Error
-    public static double evaluateMse(double[] y, double[] yHat) {
-        int m = y.length;
-        double err = 0.0;
-        for (int i = 0; i < m; i++) {
-            double errI = Math.pow(yHat[i] - y[i], 2);
-            err += errI;
-        }
-        err = err / (2.0 * m);
-        return err;
-    }
 
-    public static double evaluateCategoricalError(double[] y, double[] yHat) {
-        int m = y.length;
-        int incorrect = 0;
-        for (int i = 0; i < m; i++) {
-            if (yHat[i] != y[i]) {
-                incorrect += 1;
-            }
-        }
-        return (double) incorrect / m;
-    }
 
     public static double calculateCategoricalError(Sequential model, double[][] X, double[][] y) {
         double[][] predictions = model.predict(X);
@@ -230,7 +210,7 @@ public class C2W3Assignment {
             }
             yHat[i] = maxIdx;
         }
-        return evaluateCategoricalError(yTrue, yHat);
+        return Metrics.categoricalError(yTrue, yHat);
     }
 
     public static Sequential buildComplexModel(int classes) {
