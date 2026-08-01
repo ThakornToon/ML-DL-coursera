@@ -20,6 +20,10 @@ public final class Activation {
         return Math.max(0.0, z);
     }
 
+    public static double leaky_relu(double z) {
+        return z > 0 ? z : 0.01 * z;
+    }
+
     public static double linear(double z) {
         return z;
     }
@@ -48,6 +52,8 @@ public final class Activation {
                 return sigmoid(z);
             case "relu":
                 return relu(z);
+            case "leaky_relu":
+                return leaky_relu(z);
             case "softmax":
                 // Softmax on a single value is always 1.0
                 return 1.0;
@@ -80,6 +86,8 @@ public final class Activation {
                 return a * (1.0 - a);
             case "relu":
                 return z > 0 ? 1.0 : 0.0;
+            case "leaky_relu":
+                return z > 0 ? 1.0 : 0.01;
             case "linear":
             default:
                 return 1.0;
