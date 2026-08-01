@@ -1,8 +1,9 @@
 package ML.tools.trees;
 
 import java.util.*;
+import java.io.Serializable;
 
-public class RandomForest {
+public class RandomForest implements Serializable {
     private int nEstimators;
     private int maxDepth;
     private int minSamplesSplit;

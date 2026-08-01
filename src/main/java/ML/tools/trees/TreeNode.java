@@ -1,6 +1,8 @@
 package ML.tools.trees;
 
-public class TreeNode {
+import java.io.Serializable;
+
+public class TreeNode implements Serializable {
     public int featureIndex;
     public double threshold;
     public TreeNode left;

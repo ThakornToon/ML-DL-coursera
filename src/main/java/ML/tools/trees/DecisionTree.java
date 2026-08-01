@@ -1,8 +1,9 @@
 package ML.tools.trees;
 
 import java.util.*;
+import java.io.Serializable;
 
-public class DecisionTree {
+public class DecisionTree implements Serializable {
     private int maxDepth;
     private int minSamplesSplit;
     private int maxFeatures;
