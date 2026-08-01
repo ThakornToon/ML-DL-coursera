@@ -2,7 +2,11 @@ package ML.tools;
 
 import java.io.*;
 
-public class ModelWeightsIO {
+public final class ModelWeightsIO {
+
+    // Prevent instantiation
+    private ModelWeightsIO() {
+    }
 
     // --- SAVE METHODS ---
 
