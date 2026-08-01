@@ -73,10 +73,23 @@ public class Dense {
         this.W = new double[inputSize][units];
         this.b = new double[units];
         Random rng = new Random();
+        
+        double scale;
+        if (this.activation.equalsIgnoreCase("relu") || this.activation.equalsIgnoreCase("leaky_relu")) {
+            // He Initialization: Specifically designed for ReLU and Leaky ReLU.
+            // Since ReLU zeros out half of the values (the negative side), the variance is halved.
+            // We scale by sqrt(2/inputSize) to double the variance and prevent vanishing gradients.
+            scale = Math.sqrt(2.0 / inputSize);
+        } else {
+            // Xavier/Glorot Normal Initialization: Best for Sigmoid, Softmax, or Linear.
+            // It scales the weights by sqrt(2/(inputSize + outputSize)) to keep the variance of 
+            // activations and gradients consistent across all layers during forward and backward passes.
+            scale = Math.sqrt(2.0 / (inputSize + units));
+        }
+
         for (int i = 0; i < inputSize; i++) {
             for (int j = 0; j < units; j++) {
-                // He initialization works better for general, but simple gaussian is fine here
-                this.W[i][j] = rng.nextGaussian() * 0.1;
+                this.W[i][j] = rng.nextGaussian() * scale;
             }
         }
         this.initialized = true;
