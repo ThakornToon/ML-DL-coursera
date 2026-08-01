@@ -10,6 +10,7 @@ public class Dense {
     private double[] b;   // b shape: (units)
     private int units;
     private String activation;
+    private double lambdaL2 = 0.0;
     private String name;
     private boolean initialized = false;
 
@@ -33,6 +34,13 @@ public class Dense {
         this.name = name;
     }
 
+    public Dense(int units, String activation, double lambdaL2, String name) {
+        this.units = units;
+        this.activation = activation;
+        this.lambdaL2 = lambdaL2;
+        this.name = name;
+    }
+
     public void setWeights(double[][] W, double[] b) {
         this.W = W;
         this.b = b;
@@ -41,6 +49,10 @@ public class Dense {
     
     public double[][] getWeightsW() {
         return W;
+    }
+    
+    public double getLambdaL2() {
+        return lambdaL2;
     }
     
     public double[] getWeightsB() {
@@ -165,7 +177,7 @@ public class Dense {
                 for (int i = 0; i < m; i++) {
                     sum += A_in[i][k] * dZ[i][j];
                 }
-                dW[k][j] = sum / m;
+                dW[k][j] = (sum / m) + (lambdaL2 / m) * W[k][j];
             }
         }
 

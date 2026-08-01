@@ -101,7 +101,7 @@ public class Sequential {
             if (outputSize == 1) {
                 String finalActivation = layers.get(layers.size() - 1).getActivation();
                 if (finalActivation.equalsIgnoreCase("linear")) {
-                    // Mean Squared Error (MSE)
+                    // Mean Squared Error (MSE) -> Dense(1, "linear")
                     for (int i = 0; i < m; i++) {
                         double a = A[i][0];
                         double y = Y[i][0];
@@ -112,7 +112,7 @@ public class Sequential {
                         dA[i][0] = (a - y);
                     }
                 } else {
-                    // Binary Cross Entropy
+                    // Binary Cross Entropy -> Dense(1, "sigmoid")
                     for (int i = 0; i < m; i++) {
                         double a = A[i][0];
                         double y = Y[i][0];
@@ -184,6 +184,21 @@ public class Sequential {
                 }
             }
             loss /= m;
+            
+            double regLoss = 0.0;
+            for (Dense layer : layers) {
+                if (layer.getLambdaL2() > 0) {
+                    double layerReg = 0;
+                    double[][] W = layer.getWeightsW();
+                    for (int k = 0; k < W.length; k++) {
+                        for (int j = 0; j < W[0].length; j++) {
+                            layerReg += W[k][j] * W[k][j];
+                        }
+                    }
+                    regLoss += (layer.getLambdaL2() / (2.0 * m)) * layerReg;
+                }
+            }
+            loss += regLoss;
             
             if (epoch % 100 == 0 || epoch == 1 || epoch == epochs) {
                 System.out.printf("Epoch %d/%d - loss: %.4f%n", epoch, epochs, loss);
