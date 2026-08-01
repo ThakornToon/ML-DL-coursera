@@ -65,6 +65,10 @@ public class Dense {
         return this.units;
     }
 
+    public String getActivation() {
+        return this.activation;
+    }
+
     private void initWeights(int inputSize) {
         this.W = new double[inputSize][units];
         this.b = new double[units];
@@ -85,6 +89,7 @@ public class Dense {
         double[] aOut = new double[units];
 
         // Each unit in this layer
+        double[] zOut = new double[units];
         for (int j = 0; j < units; j++) {
             double z = 0.0;
 
@@ -93,9 +98,9 @@ public class Dense {
                 z += W[i][j] * aIn[i];
             }
             z += b[j];
-            aOut[j] = Activation.apply(z, activation);
+            zOut[j] = z;
         }
-        return aOut;
+        return Activation.apply(zOut, activation);
     }
 
     public double[][] forwardBatch(double[][] input) {
@@ -107,16 +112,20 @@ public class Dense {
         this.Z = new double[m][units];
         this.A_out = new double[m][units];
 
+        // Each input data
         for (int i = 0; i < m; i++) {
+            // Each node in this layer
             for (int j = 0; j < units; j++) {
                 double z = 0.0;
+                // Each feature weight in this node
                 for (int k = 0; k < input[i].length; k++) {
                     z += W[k][j] * input[i][k];
                 }
                 z += b[j];
                 this.Z[i][j] = z;
-                this.A_out[i][j] = Activation.apply(z, activation);
             }
+            // A_out = g(Z) for each data
+            this.A_out[i] = Activation.apply(this.Z[i], activation);
         }
         return this.A_out;
     }
@@ -125,17 +134,11 @@ public class Dense {
         int m = dA.length;
         int inputSize = W.length;
         
-        // 1. Calculate dZ = dA * g'(Z)
+        // 1. Calculate dZ
         double[][] dZ = new double[m][units];  // Accumulated error at that specific node before pass to the activation function.
         for (int i = 0; i < m; i++) {
-            // A_in -> Z = WA + b -> A_out = g(Z)
-            for (int j = 0; j < units; j++) {
-                double a = A_out[i][j];
-                double z = Z[i][j];
-                double g_prime = Activation.derivative(a, z, activation);
-                // dL/dZ = dL/dA * dA/dZ = dl/dA * g'(Z)
-                dZ[i][j] = dA[i][j] * g_prime;
-            }
+            // Calculate dZ using the array-based method to support full Softmax Jacobian
+            dZ[i] = Activation.compute_dZ(dA[i], A_out[i], Z[i], activation);
         }
 
         // 2. Calculate dW and db

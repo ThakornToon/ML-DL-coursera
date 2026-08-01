@@ -93,21 +93,81 @@ public class Sequential {
                 A = layer.forwardBatch(A);
             }
 
-            // Compute Loss (Binary Cross Entropy)
-            double loss = 0.0;  // Sum of all loss in output layer (compare with the answer key.)
-            double[][] dA = new double[m][1];  // Each derivative in last layer for each data (Output Neuron = 1)
+            // Compute Loss (Binary Cross Entropy or Sparse Categorical Crossentropy)
+            double loss = 0.0;
+            int outputSize = A[0].length;
+            double[][] dA = new double[m][outputSize];
             
-            for (int i = 0; i < m; i++) {
-                double a = A[i][0];
-                double y = Y[i][0];
+            if (outputSize == 1) {
+                // Binary Cross Entropy
+                for (int i = 0; i < m; i++) {
+                    double a = A[i][0];
+                    double y = Y[i][0];
+                    
+                    // Clip a to avoid log(0) and division by zero
+                    a = Math.max(Math.min(a, 1.0 - 1e-15), 1e-15);
+                    
+                    loss += -y * Math.log(a) - (1 - y) * Math.log(1 - a);
+                    
+                    // Derivative of BCE Loss w.r.t Activation:
+                    dA[i][0] = (a - y) / (a * (1.0 - a));
+                }
+            } else {
+                String finalActivation = layers.get(layers.size() - 1).getActivation();
                 
-                // Clip a to avoid log(0) and division by zero
-                a = Math.max(Math.min(a, 1.0 - 1e-15), 1e-15);
-                
-                loss += -y * Math.log(a) - (1 - y) * Math.log(1 - a);
-                
-                // Derivative of BCE Loss w.r.t Activation:
-                dA[i][0] = (a - y) / (a * (1.0 - a));
+                if (finalActivation.equalsIgnoreCase("softmax")) {
+                    // Sparse Categorical Crossentropy (from_logits=False)
+                    // The output A is already a probability distribution from Softmax.
+                    for (int i = 0; i < m; i++) {
+                        int y = (int) Y[i][0]; // true class
+                        double prob = Math.max(A[i][y], 1e-15);
+                        loss += -Math.log(prob);
+                        
+                        // Derivative: dL/dA.
+                        for (int j = 0; j < outputSize; j++) {
+                            if (j == y) {
+                                dA[i][j] = -1.0 / prob;
+                            } else {
+                                dA[i][j] = 0.0;
+                            }
+                        }
+                    }
+                } else {
+                    // Sparse Categorical Crossentropy (from_logits=True)
+                    // The output A contains raw logits (linear activation).
+                    // Computing Softmax internally here with Cross-Entropy (LogSumExp) provides maximum numerical stability.
+                    for (int i = 0; i < m; i++) {
+                        int y = (int) Y[i][0]; // true class
+                        
+                        // Softmax computation (stable)
+                        double maxLogit = -Double.MAX_VALUE;
+                        for (int j = 0; j < outputSize; j++) {
+                            if (A[i][j] > maxLogit) maxLogit = A[i][j];
+                        }
+                        double sumExp = 0.0;
+                        double[] probs = new double[outputSize];
+                        for (int j = 0; j < outputSize; j++) {
+                            probs[j] = Math.exp(A[i][j] - maxLogit);
+                            sumExp += probs[j];
+                        }
+                        for (int j = 0; j < outputSize; j++) {
+                            probs[j] /= sumExp;
+                        }
+                        
+                        loss += -Math.log(Math.max(probs[y], 1e-15));
+                        
+                        // Derivative: dL/dA. 
+                        // Since the last layer should be 'linear' (g'(Z) = 1), dL/dZ = dL/dA * 1
+                        // For Softmax + CE, dL/dZ = (probs - true_y)
+                        for (int j = 0; j < outputSize; j++) {
+                            if (j == y) {
+                                dA[i][j] = probs[j] - 1.0;
+                            } else {
+                                dA[i][j] = probs[j];
+                            }
+                        }
+                    }
+                }
             }
             loss /= m;
             

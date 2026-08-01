@@ -24,6 +24,7 @@ public final class C2W1Assignment {
         }
     }
 
+    // I trust AI to load data
     public static DigitData loadData() throws IOException {
         int m = 1000;
         int n = 400;
