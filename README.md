@@ -19,6 +19,7 @@ Based on the current progress, the repository includes concepts such as:
   - **Neural Networks (Coffee Roasting)** (`C2W1Lab3CoffeeRoasting.java`)
   - **Neural Networks for Handwritten Digit Recognition** (`C2W1Assignment.java`)
   - **Neural Networks for Multiclass Classification** (`C2W2Assignment.java`)
+  - **Advice for Applying Machine Learning (Model Evaluation)** (`C2W3Assignment.java`)
 - **Custom ML Tools (`ML.tools` Package)**
   - **Sequential API** (`Sequential.java`): Groups a linear stack of layers into a single model, supporting Binary and Sparse Categorical Crossentropy (with `from_logits` stability trick).
   - **Dense Layer** (`Dense.java`): Represents a fully connected neural network layer with forward/backward propagation.
@@ -137,12 +138,12 @@ Dense layer1 = model.getLayer("hidden_layer_1");
 
 // --- Save to file ---
 if (layer1 != null) {
-    ModelWeightsIO.saveWeights("layer1_weights.txt", layer1.getWeightsW(), layer1.getWeightsB());
+    ModelWeightsIO.saveWeights("ml_layer1_weights.txt", layer1.getWeightsW(), layer1.getWeightsB());
 }
 
 // --- Load from file ---
 if (layer1 != null) {
-    Object[] loaded = ModelWeightsIO.loadDenseWeights("layer1_weights.txt");
+    Object[] loaded = ModelWeightsIO.loadDenseWeights("ml_layer1_weights.txt");
     if (loaded != null) {
         double[][] W = (double[][]) loaded[0];
         double[] b = (double[]) loaded[1];
