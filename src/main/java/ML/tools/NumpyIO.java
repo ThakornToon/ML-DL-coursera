@@ -9,7 +9,9 @@ import java.nio.file.Paths;
 /**
  * Utility class for reading basic .npy files.
  */
-public class NumpyIO {
+public final class NumpyIO {
+
+    private NumpyIO() {}
 
     /**
      * Loads a 2D float64 matrix from a .npy file.
