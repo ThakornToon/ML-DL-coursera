@@ -22,6 +22,10 @@ Based on the current progress, the repository includes concepts such as:
   - **Advice for Applying Machine Learning (Model Evaluation)** (`C2W3Assignment.java`)
   - **Decision Trees with Markdown Data** (`C2W4DecisionTreeWithMarkdown.java`)
   - **Tree Ensembles (Random Forests & XGBoost)** (`C2W4Lab2TreeEnsemble.java`)
+- **Course 3: Unsupervised Learning, Recommenders, Reinforcement Learning**
+  - **K-Means Clustering** (`C3W1KMeansAssignment.java`)
+  - **Anomaly Detection** (`C3W1AnomalyDetection.java`)
+  - **Collaborative Filtering Recommender System** (`C3W2CollaborativeRecSysAssignment.java`)
 - **Custom ML Tools (`ML.tools` Package)**
   - **Sequential API** (`Sequential.java`): Groups a linear stack of layers into a single model, supporting Binary and Sparse Categorical Crossentropy (with `from_logits` stability trick).
   - **Dense Layer** (`Dense.java`): Represents a fully connected neural network layer with forward/backward propagation.
@@ -30,6 +34,9 @@ Based on the current progress, the repository includes concepts such as:
   - **Model Weights I/O** (`ModelWeightsIO.java`): Unified system for saving and loading model weights (Linear, Logistic, and Neural Networks).
   - **Data Frame** (`DataFrame.java`): Utility for handling dataset loading, splitting, and categorical data mapping.
   - **Metrics** (`Metrics.java`): Evaluation metrics for model performance (accuracy, loss, etc.).
+  - **K-Means Clustering** (`KMeans.java`): Utility for finding cluster centroids and assigning data points to clusters.
+  - **Anomaly Detection** (`AnomalyDetection.java`): Utility for estimating Gaussian distribution parameters and calculating probabilities.
+  - **NumPy I/O** (`NumpyIO.java`): Utility for reading basic `.npy` files into Java arrays.
   - **Tree-based Models (`trees` Package)**:
     - **Decision Tree** (`DecisionTree.java`): Implementation of a decision tree classifier with customizable max depth and information gain splitting.
     - **Random Forest** (`RandomForest.java`): Ensemble model utilizing multiple decision trees with bootstrapped datasets.
