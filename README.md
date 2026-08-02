@@ -20,13 +20,21 @@ Based on the current progress, the repository includes concepts such as:
   - **Neural Networks for Handwritten Digit Recognition** (`C2W1Assignment.java`)
   - **Neural Networks for Multiclass Classification** (`C2W2Assignment.java`)
   - **Advice for Applying Machine Learning (Model Evaluation)** (`C2W3Assignment.java`)
+  - **Decision Trees with Markdown Data** (`C2W4DecisionTreeWithMarkdown.java`)
+  - **Tree Ensembles (Random Forests & XGBoost)** (`C2W4Lab2TreeEnsemble.java`)
 - **Custom ML Tools (`ML.tools` Package)**
   - **Sequential API** (`Sequential.java`): Groups a linear stack of layers into a single model, supporting Binary and Sparse Categorical Crossentropy (with `from_logits` stability trick).
   - **Dense Layer** (`Dense.java`): Represents a fully connected neural network layer with forward/backward propagation.
   - **Activation Functions** (`Activation.java`): Supports `sigmoid`, `relu`, `softmax` (with full Jacobian derivatives), and `linear`.
   - **Data Normalization** (`Normalization.java`): Z-score normalization for features.
   - **Model Weights I/O** (`ModelWeightsIO.java`): Unified system for saving and loading model weights (Linear, Logistic, and Neural Networks).
-
+  - **Data Frame** (`DataFrame.java`): Utility for handling dataset loading, splitting, and categorical data mapping.
+  - **Metrics** (`Metrics.java`): Evaluation metrics for model performance (accuracy, loss, etc.).
+  - **Tree-based Models (`trees` Package)**:
+    - **Decision Tree** (`DecisionTree.java`): Implementation of a decision tree classifier with customizable max depth and information gain splitting.
+    - **Random Forest** (`RandomForest.java`): Ensemble model utilizing multiple decision trees with bootstrapped datasets.
+    - **Gradient Boosted Tree** (`GradientBoostedTree.java`): Sequential tree ensemble that builds trees to correct preceding errors.
+    - **Tree Model Saver** (`TreeModelSaver.java`): Mechanism for saving and loading tree model structures to/from disk.
 *(More algorithms and neural network models will be added in the future).*
 
 ## Data
@@ -150,4 +158,22 @@ if (layer1 != null) {
         layer1.setWeights(W, b); // Inject loaded weights into the layer
     }
 }
+```
+
+### Saving and Loading Tree Models
+
+For decision trees and tree ensembles, use the `TreeModelSaver` class to serialize models:
+
+```java
+import ML.tools.trees.TreeModelSaver;
+import ML.tools.trees.DecisionTree;
+
+DecisionTree tree = new DecisionTree(3, 0);
+// ... train the tree ...
+
+// --- Save to JSON file ---
+TreeModelSaver.saveModel(tree, "ml_decision_tree_model.json");
+
+// --- Load from JSON file ---
+DecisionTree loadedTree = (DecisionTree) TreeModelSaver.loadModel("ml_decision_tree_model.json");
 ```
