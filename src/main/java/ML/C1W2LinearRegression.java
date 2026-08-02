@@ -100,7 +100,7 @@ public final class C1W2LinearRegression {
         System.out.println("Starting C1W2 LinearRegression");
 
         // Load data using the separate function
-        double[][] data = loadData("/C1_W2_Linear_Regression_Data/ex1data1.txt");
+        double[][] data = loadData("/ML/C1_W2_Linear_Regression_Data/ex1data1.txt");
         double[] xTrain = data[0];
         double[] yTrain = data[1];
 

@@ -212,7 +212,7 @@ public final class C1W3LogisticRegression {
         System.out.println("Starting C1W3 LogisticRegression");
 
         // Load data
-        Object[] data = loadData("/C1_W3_Logistic_Regression_Data/ex2data1.txt");
+        Object[] data = loadData("/ML/C1_W3_Logistic_Regression_Data/ex2data1.txt");
         double[][] xTrain = (double[][]) data[0];
         double[] yTrain = (double[]) data[1];
 

@@ -19,7 +19,7 @@ public final class C2W4Lab2TreeEnsemble {
         int RANDOM_STATE = 55;
 
         // 1. Load data
-        String path = "src/main/resources/C2_W4_Lab_02_Tree_Ensemble_Data/heart.csv";
+        String path = "src/main/resources/ML/C2_W4_Lab_02_Tree_Ensemble_Data/heart.csv";
         DataFrame df = DataFrame.readCSV(path);
 
         // 2. One-hot encoding

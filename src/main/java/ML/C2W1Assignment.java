@@ -32,7 +32,7 @@ public final class C2W1Assignment {
         double[][] y = new double[m][1];
 
         // 1. โหลดไฟล์ X.npy (ข้อมูลรูปภาพ)
-        byte[] xBytes = Files.readAllBytes(Paths.get("src/main/resources/C2_W1_Assignment_Data/X.npy"));
+        byte[] xBytes = Files.readAllBytes(Paths.get("src/main/resources/ML/C2_W1_Assignment_Data/X.npy"));
         
         // อ่านความยาวของ Header จากไบต์ที่ 8 และ 9 (Little-Endian)
         // ใช้ & 0xFF เพื่อป้องกันค่าติดลบเมื่อแปลงจาก byte เป็น int
@@ -61,7 +61,7 @@ public final class C2W1Assignment {
         }
 
         // 2. โหลดไฟล์ y.npy (ข้อมูลเฉลย)
-        byte[] yBytes = Files.readAllBytes(Paths.get("src/main/resources/C2_W1_Assignment_Data/y.npy"));
+        byte[] yBytes = Files.readAllBytes(Paths.get("src/main/resources/ML/C2_W1_Assignment_Data/y.npy"));
         
         // คำนวณหา Offset แบบเดียวกับด้านบน
         int yHeaderLen = (yBytes[8] & 0xFF) | ((yBytes[9] & 0xFF) << 8);

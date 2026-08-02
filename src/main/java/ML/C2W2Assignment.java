@@ -34,7 +34,7 @@ public final class C2W2Assignment {
         double[][] y = new double[m][1];
 
         // 1. Load X.npy
-        byte[] xBytes = Files.readAllBytes(Paths.get("src/main/resources/C2_W2_Assignment_Data/X.npy"));
+        byte[] xBytes = Files.readAllBytes(Paths.get("src/main/resources/ML/C2_W2_Assignment_Data/X.npy"));
         
         int xHeaderLen = (xBytes[8] & 0xFF) | ((xBytes[9] & 0xFF) << 8);
         int xOffset = 10 + xHeaderLen;
@@ -50,7 +50,7 @@ public final class C2W2Assignment {
         }
 
         // 2. Load y.npy
-        byte[] yBytes = Files.readAllBytes(Paths.get("src/main/resources/C2_W2_Assignment_Data/y.npy"));
+        byte[] yBytes = Files.readAllBytes(Paths.get("src/main/resources/ML/C2_W2_Assignment_Data/y.npy"));
         
         int yHeaderLen = (yBytes[8] & 0xFF) | ((yBytes[9] & 0xFF) << 8);
         int yOffset = 10 + yHeaderLen;
