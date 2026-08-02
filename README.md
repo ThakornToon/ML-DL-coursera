@@ -1,6 +1,6 @@
 # Machine Learning & Deep Learning Specialization in Java
 
-This repository contains my personal implementations of selected labs from the [Machine Learning Specialization](https://www.coursera.org/specializations/machine-learning-introduction) and [Deep Learning Specialization](https://www.coursera.org/specializations/deep-learning) on Coursera.
+This repository contains my personal implementations of selected labs from the [Machine Learning Specialization](https://www.coursera.org/specializations/machine-learning-introduction), [Deep Learning Specialization](https://www.coursera.org/specializations/deep-learning) and [Natural Language Processing Specialization](https://www.coursera.org/specializations/natural-language-processing) on Coursera.
 
 ## Purpose
 The original labs in these courses are taught using Python. However, I prefer working with **Java** and wanted to challenge myself by building these models and algorithms from scratch in Java. This approach helps me gain a deeper understanding of the core concepts, math, and logic without relying on high-level Python libraries (like NumPy, scikit-learn, or TensorFlow).
@@ -143,27 +143,29 @@ model.summary();
 
 ## 7. Saving and Loading Weights
 
-You can export the trained weights and biases to text files so you don't have to retrain the model later.
+You can export the trained weights and biases of the entire model to a directory so you don't have to retrain later. The `save` and `load` methods will automatically save each layer's weights into separate files.
+
+```java
+// --- Save the entire model ---
+// Saves all layers to the "saved_models" directory
+model.save("saved_models");
+
+// Optionally, add a prefix to the filenames (e.g., "ml_c2w2_assign_layer1_weights.csv")
+model.save("saved_models", "ml_c2w2_assign");
+
+// --- Load the model ---
+// Load weights from the directory (ensure the prefix matches if used during save)
+model.load("saved_models", "ml_c2w2_assign");
+```
+
+If you only need to save a specific layer manually, you can still use the `ModelWeightsIO` utility:
 
 ```java
 import ML.tools.ModelWeightsIO;
 
-// Retrieve the layer by name
 Dense layer1 = model.getLayer("hidden_layer_1");
-
-// --- Save to file ---
 if (layer1 != null) {
-    ModelWeightsIO.saveWeights("ml_layer1_weights.txt", layer1.getWeightsW(), layer1.getWeightsB());
-}
-
-// --- Load from file ---
-if (layer1 != null) {
-    Object[] loaded = ModelWeightsIO.loadDenseWeights("ml_layer1_weights.txt");
-    if (loaded != null) {
-        double[][] W = (double[][]) loaded[0];
-        double[] b = (double[]) loaded[1];
-        layer1.setWeights(W, b); // Inject loaded weights into the layer
-    }
+    ModelWeightsIO.saveWeights("ml_layer1_weights.csv", layer1.getWeightsW(), layer1.getWeightsB());
 }
 ```
 
