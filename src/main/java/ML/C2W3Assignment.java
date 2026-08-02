@@ -4,7 +4,7 @@ import ML.tools.Dense;
 import ML.tools.Sequential;
 import ML.tools.Metrics;
 
-public class C2W3Assignment {
+public final class C2W3Assignment {
 
     // Prevent instantiation
     private C2W3Assignment() {
