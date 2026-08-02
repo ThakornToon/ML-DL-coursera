@@ -74,6 +74,54 @@ public class Sequential {
         System.out.println("_________________________________________________________________");
     }
 
+    public void save(String directoryPath) {
+        save(directoryPath, "");
+    }
+
+    public void save(String directoryPath, String prefix) {
+        java.io.File dir = new java.io.File(directoryPath);
+        if (!dir.exists()) {
+            dir.mkdirs();
+        }
+        String prefixStr = (prefix == null || prefix.isEmpty()) ? "" : prefix + "_";
+        for (int i = 0; i < layers.size(); i++) {
+            Dense layer = layers.get(i);
+            if (layer.isInitialized()) {
+                String name = layer.getName() != null ? layer.getName() : "layer" + (i + 1);
+                String filePath = directoryPath + "/" + prefixStr + name + "_weights.csv";
+                ModelWeightsIO.saveWeights(filePath, layer.getWeightsW(), layer.getWeightsB());
+            } else {
+                System.out.println("Skipping uninitialized layer: " + (layer.getName() != null ? layer.getName() : "layer" + (i + 1)));
+            }
+        }
+        System.out.println("Model saved successfully to directory: " + directoryPath);
+    }
+
+    public void load(String directoryPath) {
+        load(directoryPath, "");
+    }
+
+    public void load(String directoryPath, String prefix) {
+        String prefixStr = (prefix == null || prefix.isEmpty()) ? "" : prefix + "_";
+        for (int i = 0; i < layers.size(); i++) {
+            Dense layer = layers.get(i);
+            String name = layer.getName() != null ? layer.getName() : "layer" + (i + 1);
+            String filePath = directoryPath + "/" + prefixStr + name + "_weights.csv";
+            java.io.File file = new java.io.File(filePath);
+            if (file.exists()) {
+                Object[] loaded = ModelWeightsIO.loadDenseWeights(filePath);
+                if (loaded != null) {
+                    double[][] W = (double[][]) loaded[0];
+                    double[] b = (double[]) loaded[1];
+                    layer.setWeights(W, b);
+                }
+            } else {
+                System.err.println("Warning: Weight file not found for layer " + name + " at " + filePath);
+            }
+        }
+        System.out.println("Model loaded successfully from directory: " + directoryPath);
+    }
+
     public double[] forward(double[] x) {
         double[] a = x;
         for (Dense layer : layers) {
