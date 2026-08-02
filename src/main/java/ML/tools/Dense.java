@@ -125,7 +125,6 @@ public class Dense {
         if (!initialized) {
             initWeights(aIn.length);
         }
-        double[] aOut = new double[units];
 
         // Each unit in this layer
         double[] zOut = new double[units];

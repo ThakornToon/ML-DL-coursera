@@ -41,6 +41,10 @@ public class Sequential {
         }
         return null;
     }
+    
+    public List<Dense> getLayers() {
+        return layers;
+    }
 
     /**
      * Prints a summary representation of the model architecture,
