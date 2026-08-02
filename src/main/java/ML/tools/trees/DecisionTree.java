@@ -3,14 +3,38 @@ package ML.tools.trees;
 import java.util.*;
 import java.io.Serializable;
 
+/**
+ * An implementation of a standard Decision Tree algorithm.
+ * Supports both classification (using Gini impurity) and regression (using Variance).
+ */
 public class DecisionTree implements Serializable {
+    /** The maximum permitted depth of the tree. */
     private int maxDepth;
+    
+    /** The minimum number of samples required to split an internal node. */
     private int minSamplesSplit;
+    
+    /** The maximum number of features to consider when looking for the best split. */
     private int maxFeatures;
+    
+    /** True if this is a regression tree, false for a classification tree. */
     private boolean isRegression;
+    
+    /** The root node of the fitted decision tree. */
     private TreeNode root;
+    
+    /** Random number generator used for feature sampling. */
     private Random random;
 
+    /**
+     * Initializes a Decision Tree model.
+     *
+     * @param maxDepth        The maximum depth of the tree (<= 0 for unlimited).
+     * @param minSamplesSplit The minimum number of samples to split a node.
+     * @param maxFeatures     The max features to evaluate for splits (0 for all).
+     * @param isRegression    True for regression, false for classification.
+     * @param randomState     The seed for the random number generator.
+     */
     public DecisionTree(int maxDepth, int minSamplesSplit, int maxFeatures, boolean isRegression, int randomState) {
         this.maxDepth = maxDepth <= 0 ? Integer.MAX_VALUE : maxDepth;
         this.minSamplesSplit = minSamplesSplit;
@@ -19,6 +43,12 @@ public class DecisionTree implements Serializable {
         this.random = new Random(randomState);
     }
 
+    /**
+     * Trains the Decision Tree using the provided dataset.
+     *
+     * @param X The 2D array of training features.
+     * @param y The 1D array of target values or labels.
+     */
     public void fit(double[][] X, double[] y) {
         List<Integer> rowIndices = new ArrayList<>();
         for (int i = 0; i < X.length; i++) rowIndices.add(i);
@@ -163,6 +193,12 @@ public class DecisionTree implements Serializable {
         }
     }
 
+    /**
+     * Predicts values or labels for a given set of inputs.
+     *
+     * @param X The 2D array of input features to evaluate.
+     * @return A 1D array of predicted values (regression) or class labels (classification).
+     */
     public double[] predict(double[][] X) {
         double[] preds = new double[X.length];
         for (int i = 0; i < X.length; i++) {

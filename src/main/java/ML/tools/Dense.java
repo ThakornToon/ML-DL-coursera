@@ -3,7 +3,8 @@ package ML.tools;
 import java.util.Random;
 
 /**
- * Represents a fully connected Dense Layer in a Neural Network.
+ * Represents a fully connected (Dense) layer in a Neural Network.
+ * Implements forward and backward propagation steps for this layer.
  */
 public class Dense {
     private double[][] W; // W shape: (inputSize, units)
@@ -28,6 +29,13 @@ public class Dense {
     private static final double BETA2 = 0.999;
     private static final double EPSILON = 1e-8;
 
+    /**
+     * Constructs a Dense layer.
+     *
+     * @param units      The number of neurons (dimensionality of the output space).
+     * @param activation The activation function to use (e.g., "relu", "sigmoid", "linear").
+     * @param name       The unique name for this layer.
+     */
     public Dense(int units, String activation, String name) {
         this.units = units;
         this.activation = activation;
@@ -107,6 +115,12 @@ public class Dense {
         this.initialized = true;
     }
 
+    /**
+     * Performs a forward pass for a single input sample.
+     *
+     * @param aIn The input array for this layer.
+     * @return The activated output array.
+     */
     public double[] forward(double[] aIn) {
         if (!initialized) {
             initWeights(aIn.length);
@@ -128,6 +142,13 @@ public class Dense {
         return Activation.apply(zOut, activation);
     }
 
+    /**
+     * Performs a forward pass for a batch of input samples.
+     * Caches inputs, pre-activation, and post-activation values for backpropagation.
+     *
+     * @param input The 2D input array for this layer (samples x features).
+     * @return The 2D activated output array.
+     */
     public double[][] forwardBatch(double[][] input) {
         if (!initialized) {
             initWeights(input[0].length);

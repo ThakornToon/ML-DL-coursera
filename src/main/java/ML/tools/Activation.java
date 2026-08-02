@@ -9,6 +9,13 @@ public final class Activation {
     private Activation() {
     }
 
+    /**
+     * Computes the Sigmoid activation function.
+     * Maps the input value to a range between 0 and 1.
+     *
+     * @param z The input value.
+     * @return The sigmoid of z.
+     */
     public static double sigmoid(double z) {
         // Prevent overflow by bounding z
         if (z < -40.0) return 0.0;
@@ -16,18 +23,45 @@ public final class Activation {
         return 1.0 / (1.0 + Math.exp(-z));
     }
 
+    /**
+     * Computes the Rectified Linear Unit (ReLU) activation function.
+     * Returns the maximum of 0 and the input value.
+     *
+     * @param z The input value.
+     * @return The ReLU of z.
+     */
     public static double relu(double z) {
         return Math.max(0.0, z);
     }
 
+    /**
+     * Computes the Leaky ReLU activation function.
+     * Allows a small, positive gradient when the unit is not active.
+     *
+     * @param z The input value.
+     * @return The Leaky ReLU of z.
+     */
     public static double leaky_relu(double z) {
         return z > 0 ? z : 0.01 * z;
     }
 
+    /**
+     * Computes the Linear activation function (identity function).
+     *
+     * @param z The input value.
+     * @return The exact input value z.
+     */
     public static double linear(double z) {
         return z;
     }
 
+    /**
+     * Computes the Softmax activation function.
+     * Converts an array of unnormalized log probabilities to a probability distribution.
+     *
+     * @param z The input array of values.
+     * @return An array of probabilities summing to 1.
+     */
     public static double[] softmax(double[] z) {
         double maxZ = -Double.MAX_VALUE;
         for (double v : z) {
@@ -46,6 +80,13 @@ public final class Activation {
         return a;
     }
 
+    /**
+     * Applies a specified activation function to a single value.
+     *
+     * @param z              The input value.
+     * @param activationName The name of the activation function (e.g., "relu", "sigmoid").
+     * @return The activated value.
+     */
     public static double apply(double z, String activationName) {
         switch (activationName.toLowerCase()) {
             case "sigmoid":

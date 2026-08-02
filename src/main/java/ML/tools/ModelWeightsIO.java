@@ -2,6 +2,9 @@ package ML.tools;
 
 import java.io.*;
 
+/**
+ * Utility class for saving and loading model weights to and from disk.
+ */
 public final class ModelWeightsIO {
 
     // Prevent instantiation
@@ -11,6 +14,14 @@ public final class ModelWeightsIO {
     // --- SAVE METHODS ---
 
     // For Neural Network Dense Layer (2D array W, 1D array b) (Core Save Method)
+    /**
+     * Saves 2D weights and 1D biases to a CSV file.
+     * Primarily used for Dense neural network layers.
+     *
+     * @param filePath The destination file path.
+     * @param W        The 2D weight matrix.
+     * @param b        The 1D bias array.
+     */
     public static void saveWeights(String filePath, double[][] W, double[] b) {
         try (PrintWriter out = new PrintWriter(new FileWriter(filePath))) {
             for (int i = 0; i < b.length; i++) {
@@ -42,6 +53,12 @@ public final class ModelWeightsIO {
     // --- LOAD METHODS ---
 
     // Core Load Method
+    /**
+     * Loads 2D weights and 1D biases from a CSV file.
+     *
+     * @param filePath The source file path.
+     * @return An Object array containing {double[][] W, double[] b}, or null on failure.
+     */
     public static Object[] loadDenseWeights(String filePath) {
         try (BufferedReader reader = new BufferedReader(new FileReader(filePath))) {
             String[] bStrs = reader.readLine().split(",");

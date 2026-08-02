@@ -5,15 +5,31 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.*;
 
+/**
+ * A lightweight data structure for loading and manipulating tabular data, 
+ * typically used for preprocessing before model training.
+ */
 public class DataFrame {
+    /** List of column names. */
     public List<String> columns;
+    
+    /** 2D list representing the rows and columns of data (stored as Strings). */
     public List<List<String>> data;
 
+    /**
+     * Initializes an empty DataFrame.
+     */
     public DataFrame() {
         this.columns = new ArrayList<>();
         this.data = new ArrayList<>();
     }
 
+    /**
+     * Reads tabular data from a CSV file into a DataFrame.
+     *
+     * @param path The path to the CSV file.
+     * @return A new DataFrame populated with the CSV data.
+     */
     public static DataFrame readCSV(String path) {
         DataFrame df = new DataFrame();
         try (BufferedReader br = new BufferedReader(new FileReader(path))) {
@@ -33,6 +49,12 @@ public class DataFrame {
         return df;
     }
 
+    /**
+     * Performs One-Hot Encoding on the specified categorical columns.
+     * The original columns are removed and replaced with binary indicator columns.
+     *
+     * @param categoricalCols A list of column names to encode.
+     */
     public void getDummies(List<String> categoricalCols) {
         for (String col : categoricalCols) {
             int colIdx = columns.indexOf(col);
@@ -110,6 +132,15 @@ public class DataFrame {
         public double[] yTrain, yVal;
     }
 
+    /**
+     * Splits feature and target arrays into random train and validation subsets.
+     *
+     * @param X           The feature matrix.
+     * @param y           The target array.
+     * @param trainSize   The proportion of the dataset to include in the train split (0.0 to 1.0).
+     * @param randomState The seed used by the random number generator.
+     * @return A Split object containing the partitioned data.
+     */
     public static Split trainTestSplit(double[][] X, double[] y, double trainSize, int randomState) {
         int n = X.length;
         int nTrain = (int) (n * trainSize);

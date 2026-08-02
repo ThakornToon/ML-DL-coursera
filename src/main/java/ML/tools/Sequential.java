@@ -4,7 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Sequential groups a linear stack of layers into a single model.
+ * A Sequential model groups a linear stack of layers into a single neural network.
+ * It provides methods for compiling, training, and predicting.
  */
 public class Sequential {
     private List<Dense> layers;
@@ -23,6 +24,11 @@ public class Sequential {
         this.learningRate = learningRate;
     }
 
+    /**
+     * Adds a layer to the model.
+     *
+     * @param layer The Dense layer instance to add.
+     */
     public void add(Dense layer) {
         this.layers.add(layer);
     }
@@ -36,6 +42,10 @@ public class Sequential {
         return null;
     }
 
+    /**
+     * Prints a summary representation of the model architecture,
+     * including layer types, output shapes, and parameter counts.
+     */
     public void summary() {
         System.out.println("Model: \"sequential\"");
         System.out.println("_________________________________________________________________");
@@ -68,6 +78,12 @@ public class Sequential {
         return a;
     }
 
+    /**
+     * Generates output predictions for the input samples.
+     *
+     * @param X The 2D array of input features (samples x features).
+     * @return A 2D array of predictions (samples x outputs).
+     */
     public double[][] predict(double[][] X) {
         int m = X.length;
         double[][] predictions = new double[m][];
