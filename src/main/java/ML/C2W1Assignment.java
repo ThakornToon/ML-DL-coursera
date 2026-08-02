@@ -24,54 +24,24 @@ public final class C2W1Assignment {
         }
     }
 
-    // I trust AI to load data
     public static DigitData loadData() throws IOException {
         int m = 1000;
         int n = 400;
         double[][] X = new double[m][n];
         double[][] y = new double[m][1];
 
-        // 1. โหลดไฟล์ X.npy (ข้อมูลรูปภาพ)
-        byte[] xBytes = Files.readAllBytes(Paths.get("src/main/resources/ML/C2_W1_Assignment_Data/X.npy"));
-        
-        // อ่านความยาวของ Header จากไบต์ที่ 8 และ 9 (Little-Endian)
-        // ใช้ & 0xFF เพื่อป้องกันค่าติดลบเมื่อแปลงจาก byte เป็น int
-        int xHeaderLen = (xBytes[8] & 0xFF) | ((xBytes[9] & 0xFF) << 8);
-        
-        // ข้อมูลตัวเลขจริงๆ จะเริ่มต้นที่ไบต์ที่ 10 + ความยาวของ Header
-        int xOffset = 10 + xHeaderLen;
-        
-        // ใช้ ByteBuffer เพื่อความสะดวกในการแปลงไบต์เป็น double (64-bit float)
-        ByteBuffer xBuffer = ByteBuffer.wrap(xBytes, xOffset, xBytes.length - xOffset);
-        // ไฟล์ถูกเซฟมาแบบ Little-Endian จึงต้องตั้งค่า Order ให้ตรงกัน
-        xBuffer.order(ByteOrder.LITTLE_ENDIAN);
-        
-        // ไฟล์ X.npy ถูกบันทึกมาในรูปแบบ Fortran order (Column-Major) 
-        // ซึ่งแปลว่าข้อมูลถูกเรียงต่อกันตาม "คอลัมน์" (ไม่ใช่ตามแถวเหมือนปกติ)
-        // ไฟล์ต้นฉบับมีทั้งหมด 5000 แถว และ 400 คอลัมน์
-        for (int c = 0; c < 400; c++) { // ลูปคอลัมน์อยู่ด้านนอก
-            for (int r = 0; r < 5000; r++) { // ลูปแถวอยู่ด้านใน
-                double val = xBuffer.getDouble(); // อ่านค่า 8 ไบต์ แปลงเป็น double
-                
-                // โจทย์ระบุว่าเราต้องการแค่เลข 0 และ 1 ซึ่งอยู่ใน 1000 แถวแรก
-                if (r < m) {
-                    X[r][c] = val;
-                }
-            }
+        String basePath = "src/main/resources/ML/C2_W1_Assignment_Data/";
+
+        // 1. โหลดไฟล์ X.npy (ข้อมูลรูปภาพ) - โหลดทั้งหมด 5000 แถว แล้วเลือกมาแค่ 1000 แถวแรก
+        double[][] X_full = ML.tools.NumpyIO.loadDoubleMatrix(basePath + "X.npy", 5000, 400, true);
+        for (int r = 0; r < m; r++) {
+            X[r] = X_full[r];
         }
 
         // 2. โหลดไฟล์ y.npy (ข้อมูลเฉลย)
-        byte[] yBytes = Files.readAllBytes(Paths.get("src/main/resources/ML/C2_W1_Assignment_Data/y.npy"));
-        
-        // คำนวณหา Offset แบบเดียวกับด้านบน
-        int yHeaderLen = (yBytes[8] & 0xFF) | ((yBytes[9] & 0xFF) << 8);
-        int yOffset = 10 + yHeaderLen;
-        
-        // ไฟล์ y.npy เก็บข้อมูลด้วย Type '|u1' คือ 1-byte Unsigned Integer (เก็บค่า 0-255)
-        // และเรียงข้อมูลตามแถว (C-order ปกติ) จึงสามารถลูปอ่านทีละแถวได้เลย
+        int[] y_full = ML.tools.NumpyIO.loadUint8Array(basePath + "y.npy", 5000);
         for (int r = 0; r < m; r++) {
-            // ดึงค่าไบต์และใช้ & 0xFF เพื่อให้ได้เป็นค่าจำนวนเต็มบวกใน Java
-            y[r][0] = yBytes[yOffset + r] & 0xFF;
+            y[r][0] = y_full[r];
         }
 
         return new DigitData(X, y);

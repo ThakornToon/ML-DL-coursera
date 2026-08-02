@@ -79,6 +79,8 @@ public final class C3W1KMeansAssignment {
         } catch (IOException e) {
             e.printStackTrace();
         }
+
+        System.out.println("=================================================================\n");
     }
 }
 

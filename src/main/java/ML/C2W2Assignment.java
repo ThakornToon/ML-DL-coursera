@@ -26,37 +26,17 @@ public final class C2W2Assignment {
         }
     }
 
-    // I trust AI to load data
     public static DigitData loadData() throws IOException {
-        int m = 5000;
-        int n = 400;
-        double[][] X = new double[m][n];
-        double[][] y = new double[m][1];
-
+        String basePath = "src/main/resources/ML/C2_W2_Assignment_Data/";
+        
         // 1. Load X.npy
-        byte[] xBytes = Files.readAllBytes(Paths.get("src/main/resources/ML/C2_W2_Assignment_Data/X.npy"));
-        
-        int xHeaderLen = (xBytes[8] & 0xFF) | ((xBytes[9] & 0xFF) << 8);
-        int xOffset = 10 + xHeaderLen;
-        
-        ByteBuffer xBuffer = ByteBuffer.wrap(xBytes, xOffset, xBytes.length - xOffset);
-        xBuffer.order(ByteOrder.LITTLE_ENDIAN);
-        
-        for (int c = 0; c < n; c++) { 
-            for (int r = 0; r < m; r++) { 
-                double val = xBuffer.getDouble(); 
-                X[r][c] = val;
-            }
-        }
+        double[][] X = ML.tools.NumpyIO.loadDoubleMatrix(basePath + "X.npy", 5000, 400, true);
 
         // 2. Load y.npy
-        byte[] yBytes = Files.readAllBytes(Paths.get("src/main/resources/ML/C2_W2_Assignment_Data/y.npy"));
-        
-        int yHeaderLen = (yBytes[8] & 0xFF) | ((yBytes[9] & 0xFF) << 8);
-        int yOffset = 10 + yHeaderLen;
-        
-        for (int r = 0; r < m; r++) {
-            y[r][0] = yBytes[yOffset + r] & 0xFF;
+        int[] y_full = ML.tools.NumpyIO.loadUint8Array(basePath + "y.npy", 5000);
+        double[][] y = new double[5000][1];
+        for (int r = 0; r < 5000; r++) {
+            y[r][0] = y_full[r];
         }
 
         return new DigitData(X, y);
