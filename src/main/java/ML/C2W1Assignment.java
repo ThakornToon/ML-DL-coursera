@@ -9,6 +9,10 @@ import java.nio.ByteOrder;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 
+/**
+ * Implementation of the C2W1 Neural Network Assignment.
+ * Covers basic neural network operations and forward propagation.
+ */
 public final class C2W1Assignment {
 
     // Prevent instantiation
@@ -47,6 +51,9 @@ public final class C2W1Assignment {
         return new DigitData(X, y);
     }
 
+    /**
+     * Executes the assignment tasks.
+     */
     public static void start() {
         System.out.println("Starting C2W1 Assignment: Neural Networks for Handwritten Digit Recognition");
         

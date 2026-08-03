@@ -18,10 +18,17 @@ import java.util.*;
  *    like TensorFlow's tf.GradientTape, we have to manually derive and implement the gradients 
  *    and the Adam Optimizer loop. This is why the code appears longer than its Python counterpart.
  */
+/**
+ * Implementation of the C3W2 Collaborative Filtering Recommender System Assignment.
+ * Deals with computing cost functions and gradients for collaborative filtering.
+ */
 public final class C3W2CollaborativeRecSysAssignment {
 
     private C3W2CollaborativeRecSysAssignment() {}
 
+    /**
+     * Executes the collaborative filtering recommender system demonstration.
+     */
     public static void start() {
         System.out.println("Collaborative Filtering Recommender System...");
         String basePath = "src/main/resources/ML/C3_W2_Collaborative_RecSys_Assignment_Data/";

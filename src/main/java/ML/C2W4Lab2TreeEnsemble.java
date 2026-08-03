@@ -9,11 +9,23 @@ import ML.tools.trees.RandomForest;
 import java.util.Arrays;
 import java.util.List;
 
+/**
+ * Implementation of the C2W4 Lab 2: Tree Ensemble.
+ * This class demonstrates the usage of Decision Trees, Random Forests,
+ * and Gradient Boosted Trees (XGBoost logic) for a binary classification
+ * problem (Heart Disease prediction), including hyperparameter tuning.
+ */
 public final class C2W4Lab2TreeEnsemble {
 
     private C2W4Lab2TreeEnsemble() {
     }
 
+    /**
+     * Executes the tree ensemble lab.
+     * It handles data loading, one-hot encoding, train-validation splitting,
+     * and trains Decision Tree, Random Forest, and Gradient Boosted Tree models
+     * across various hyperparameters, reporting their accuracies.
+     */
     public static void start() {
         System.out.println("Starting C2W4 Lab 2: Tree Ensemble");
         int RANDOM_STATE = 55;

@@ -8,6 +8,11 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Implementation of the C1W3 Logistic Regression Assignment.
+ * Provides methods for computing the sigmoid function, logistic cost, and
+ * gradient descent for logistic regression.
+ */
 public final class C1W3LogisticRegression {
 
     // Prevent instantiation
@@ -208,6 +213,9 @@ public final class C1W3LogisticRegression {
         return xNorm;
     }
 
+    /**
+     * Executes the logistic regression workflow.
+     */
     public static void start() {
         System.out.println("Starting C1W3 LogisticRegression");
 

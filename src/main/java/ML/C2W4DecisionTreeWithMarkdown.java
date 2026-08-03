@@ -20,6 +20,12 @@ public final class C2W4DecisionTreeWithMarkdown {
     private C2W4DecisionTreeWithMarkdown() {
     }
 
+    /**
+     * Computes the entropy (information gain measure) of a node given the labels.
+     * 
+     * @param y Array of binary labels (0 or 1).
+     * @return The calculated entropy value.
+     */
     public static double computeEntropy(int[] y) {
         if (y.length == 0) return 0.0;
         int count1 = 0;
@@ -31,11 +37,22 @@ public final class C2W4DecisionTreeWithMarkdown {
         return -p1 * (Math.log(p1) / Math.log(2)) - (1 - p1) * (Math.log(1 - p1) / Math.log(2));
     }
 
+    /**
+     * Represents the result of a dataset split, containing indices for the left and right child nodes.
+     */
     public static class Split {
         public List<Integer> leftIndices = new ArrayList<>();
         public List<Integer> rightIndices = new ArrayList<>();
     }
 
+    /**
+     * Splits the dataset based on a specific feature.
+     * 
+     * @param X The feature matrix.
+     * @param nodeIndices Indices of the data points at the current node.
+     * @param feature The index of the feature to split on.
+     * @return A Split object containing left and right indices.
+     */
     public static Split splitDataset(double[][] X, List<Integer> nodeIndices, int feature) {
         Split split = new Split();
         for (int i : nodeIndices) {
@@ -48,6 +65,15 @@ public final class C2W4DecisionTreeWithMarkdown {
         return split;
     }
 
+    /**
+     * Computes the information gain from splitting a node on a specific feature.
+     * 
+     * @param X The feature matrix.
+     * @param y Array of binary labels.
+     * @param nodeIndices Indices of the data points at the current node.
+     * @param feature The index of the feature to evaluate.
+     * @return The calculated information gain.
+     */
     public static double computeInformationGain(double[][] X, int[] y, List<Integer> nodeIndices, int feature) {
         Split split = splitDataset(X, nodeIndices, feature);
 
@@ -72,6 +98,14 @@ public final class C2W4DecisionTreeWithMarkdown {
         return nodeEntropy - weightedEntropy;
     }
 
+    /**
+     * Finds the best feature to split on by maximizing information gain.
+     * 
+     * @param X The feature matrix.
+     * @param y Array of binary labels.
+     * @param nodeIndices Indices of the data points at the current node.
+     * @return The index of the best feature to split on, or -1 if no features exist.
+     */
     public static int getBestSplit(double[][] X, int[] y, List<Integer> nodeIndices) {
         if (X.length == 0) return -1;
         int numFeatures = X[0].length;
@@ -88,6 +122,16 @@ public final class C2W4DecisionTreeWithMarkdown {
         return bestFeature;
     }
 
+    /**
+     * Recursively builds the decision tree and prints the steps and splits.
+     * 
+     * @param X The feature matrix.
+     * @param y Array of binary labels.
+     * @param nodeIndices Indices of the data points at the current node.
+     * @param branchName The name of the branch ("Root", "Left", "Right").
+     * @param maxDepth The maximum depth the tree is allowed to reach.
+     * @param currentDepth The current depth in the recursive tree building process.
+     */
     public static void buildTreeRecursive(double[][] X, int[] y, List<Integer> nodeIndices, String branchName, int maxDepth, int currentDepth) {
         if (currentDepth == maxDepth) {
             String formatting = " ".repeat(currentDepth) + "-".repeat(currentDepth);
@@ -104,6 +148,9 @@ public final class C2W4DecisionTreeWithMarkdown {
         buildTreeRecursive(X, y, split.rightIndices, "Right", maxDepth, currentDepth + 1);
     }
 
+    /**
+     * Executes the decision tree building process using the dataset defined for the lab.
+     */
     public static void start() {
         System.out.println("Starting C2W4 Decision Tree with Markdown Lab");
 

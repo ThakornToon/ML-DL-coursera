@@ -5,10 +5,21 @@ import ML.tools.NumpyIO;
 
 import java.io.IOException;
 
+/**
+ * C3W1AnomalyDetection implements the anomaly detection algorithms for
+ * the Course 3 Week 1 assignment. It covers finding anomalies in both
+ * 2D datasets and high-dimensional datasets using multivariate Gaussian
+ * distributions.
+ */
 public final class C3W1AnomalyDetection {
 
     private C3W1AnomalyDetection() {}
 
+    /**
+     * Executes the anomaly detection processes.
+     * It loads the datasets, estimates Gaussian parameters, calculates probabilities,
+     * selects the best threshold (epsilon) using cross-validation, and identifies outliers.
+     */
     public static void start() {
         System.out.println("Running Anomaly Detection...");
         String basePath = "src/main/resources/ML/C3_W1_Anomaly_Detection_Data/";

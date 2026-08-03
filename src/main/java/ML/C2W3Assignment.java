@@ -4,6 +4,10 @@ import ML.tools.Dense;
 import ML.tools.Sequential;
 import ML.tools.Metrics;
 
+/**
+ * Implementation of the C2W3 Assignment.
+ * Covers neural network multi-class classification topics.
+ */
 public final class C2W3Assignment {
 
     // Prevent instantiation
@@ -239,6 +243,9 @@ public final class C2W3Assignment {
         return model;
     }
 
+    /**
+     * Executes the assignment tasks.
+     */
     public static void start() {
         System.out.println("Starting C2W3 Assignment: Advice for Applying Machine Learning");
 

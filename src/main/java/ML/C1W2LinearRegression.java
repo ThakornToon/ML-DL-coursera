@@ -8,6 +8,11 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Implementation of the C1W2 Linear Regression Assignment.
+ * This class handles loading data, computing cost, and performing gradient descent
+ * for linear regression tasks.
+ */
 public final class C1W2LinearRegression {
 
     // Prevent instantiation
@@ -96,6 +101,9 @@ public final class C1W2LinearRegression {
         return new double[][]{xTrain, yTrain};
     }
 
+    /**
+     * Executes the linear regression workflow.
+     */
     public static void start() {
         System.out.println("Starting C1W2 LinearRegression");
 

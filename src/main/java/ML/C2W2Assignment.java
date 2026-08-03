@@ -10,6 +10,9 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.Random;
 
+/**
+ * Implementation of the C2W2 Softmax and multi-class classification Assignment.
+ */
 public final class C2W2Assignment {
 
     // Prevent instantiation
@@ -42,6 +45,9 @@ public final class C2W2Assignment {
         return new DigitData(X, y);
     }
 
+    /**
+     * Executes the assignment tasks.
+     */
     public static void start() {
         System.out.println("Starting C2W2 Assignment: Neural Networks for Multiclass Classification");
         

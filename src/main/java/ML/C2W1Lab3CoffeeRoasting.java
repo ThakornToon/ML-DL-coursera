@@ -6,6 +6,10 @@ import ML.tools.Sequential;
 
 import java.util.Random;
 
+/**
+ * Implementation of the C2W1 Lab 3 Coffee Roasting assignment.
+ * Demonstrates basic neural network usage on a simple coffee roasting dataset.
+ */
 public final class C2W1Lab3CoffeeRoasting {
 
     // Prevent instantiation
@@ -53,6 +57,9 @@ public final class C2W1Lab3CoffeeRoasting {
         return new CoffeeData(X, Y);
     }
 
+    /**
+     * Executes the coffee roasting neural network lab.
+     */
     public static void start() {
         System.out.println("Starting Coffee Roasting Lab");
 

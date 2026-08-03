@@ -6,10 +6,17 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 
+/**
+ * Implementation of the C3W1 K-Means Assignment.
+ * Demonstrates clustering logic and centroids optimization.
+ */
 public final class C3W1KMeansAssignment {
 
     private C3W1KMeansAssignment() {}
 
+    /**
+     * Executes the K-Means clustering assignment.
+     */
     public static void start() {
         System.out.println("Running K-Means on image compression...");
         try {
