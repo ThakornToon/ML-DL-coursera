@@ -77,21 +77,38 @@ public final class C3W2RecSysNNAssignment {
         itemNN.add(new Dense(128, "relu", "item_layer2"));
         itemNN.add(new Dense(32, "linear", "item_layer3"));
         
-        String weightsDir = "src/main/resources/ML/C3W2_Weights";
         boolean loadModel = false; // Change to true to load existing model weights
 
         if (loadModel) {
-            System.out.println("Loading saved weights from " + weightsDir + "...");
-            userNN.load(weightsDir);
-            itemNN.load(weightsDir);
+            System.out.println("Loading saved weights...");
+            for (ML.tools.Dense layer : userNN.getLayers()) {
+                String filename = "ml_c3w2_assign_" + layer.getName() + "_weights.txt";
+                Object[] loaded = ML.tools.ModelWeightsIO.loadDenseWeights(filename);
+                if (loaded != null) layer.setWeights((double[][]) loaded[0], (double[]) loaded[1]);
+            }
+            for (ML.tools.Dense layer : itemNN.getLayers()) {
+                String filename = "ml_c3w2_assign_" + layer.getName() + "_weights.txt";
+                Object[] loaded = ML.tools.ModelWeightsIO.loadDenseWeights(filename);
+                if (loaded != null) layer.setWeights((double[][]) loaded[0], (double[]) loaded[1]);
+            }
         }
 
         // Train
         trainTwoTower(userNN, itemNN, uTrainSub, iTrainSub, yTrainSub, 5, 0.01);
 
-        System.out.println("Saving model weights to " + weightsDir + "...");
-        userNN.save(weightsDir);
-        itemNN.save(weightsDir);
+        System.out.println("Saving model weights...");
+        for (ML.tools.Dense layer : userNN.getLayers()) {
+            if (layer.isInitialized()) {
+                String filename = "ml_c3w2_assign_" + layer.getName() + "_weights.txt";
+                ML.tools.ModelWeightsIO.saveWeights(filename, layer.getWeightsW(), layer.getWeightsB());
+            }
+        }
+        for (ML.tools.Dense layer : itemNN.getLayers()) {
+            if (layer.isInitialized()) {
+                String filename = "ml_c3w2_assign_" + layer.getName() + "_weights.txt";
+                ML.tools.ModelWeightsIO.saveWeights(filename, layer.getWeightsW(), layer.getWeightsB());
+            }
+        }
 
         System.out.println("=================================================================\n");
     }
