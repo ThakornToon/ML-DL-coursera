@@ -77,8 +77,23 @@ public final class C3W2RecSysNNAssignment {
         itemNN.add(new Dense(128, "relu", "item_layer2"));
         itemNN.add(new Dense(32, "linear", "item_layer3"));
         
+        String weightsDir = "src/main/resources/ML/C3W2_Weights";
+        boolean loadModel = false; // Change to true to load existing model weights
+
+        if (loadModel) {
+            System.out.println("Loading saved weights from " + weightsDir + "...");
+            userNN.load(weightsDir);
+            itemNN.load(weightsDir);
+        }
+
         // Train
         trainTwoTower(userNN, itemNN, uTrainSub, iTrainSub, yTrainSub, 5, 0.01);
+
+        System.out.println("Saving model weights to " + weightsDir + "...");
+        userNN.save(weightsDir);
+        itemNN.save(weightsDir);
+
+        System.out.println("=================================================================\n");
     }
 
     public static void trainTwoTower(Sequential userNN, Sequential itemNN, 
