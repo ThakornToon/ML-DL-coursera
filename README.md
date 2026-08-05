@@ -26,6 +26,8 @@ Based on the current progress, the repository includes concepts such as:
   - **K-Means Clustering** (`C3W1KMeansAssignment.java`)
   - **Anomaly Detection** (`C3W1AnomalyDetection.java`)
   - **Collaborative Filtering Recommender System** (`C3W2CollaborativeRecSysAssignment.java`)
+  - **Neural Network Recommender System** (`C3W2RecSysNNAssignment.java`)
+  - **Deep Q-Learning (Lunar Lander)** (`C3W3A1Assignment.java`)
 - **Custom ML Tools (`ML.tools` Package)**
   - **Sequential API** (`Sequential.java`): Groups a linear stack of layers into a single model, supporting Binary and Sparse Categorical Crossentropy (with `from_logits` stability trick).
   - **Dense Layer** (`Dense.java`): Represents a fully connected neural network layer with forward/backward propagation.
