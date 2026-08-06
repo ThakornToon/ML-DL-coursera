@@ -250,22 +250,38 @@ public final class C1W3LogisticRegression {
         // Normalize features for faster convergence during gradient descent
         double[][] xTrainNorm = normalizeFeatures(xTrain);
 
-        // Run gradient descent
-        initialW = new double[n];
-        initialB = 0.0;
-        int iterations = 10000;
-        double alpha = 0.1;
-        double lambda = 0.0; // Unregularized for ex2data1
-
-        System.out.println("Running gradient descent...");
-        Object[] wb = gradientDescent(xTrainNorm, yTrain, initialW, initialB, alpha, iterations, lambda);
-        double[] w = (double[]) wb[0];
-        double b = (double) wb[1];
-        System.out.printf("w found by gradient descent: [%.3f, %.3f]\n", w[0], w[1]);
-        System.out.printf("b found by gradient descent: %.3f\n\n", b);
-
-        // Save the trained weights
-        ModelWeightsIO.saveWeights("ml_c1w3_logistic_weights.txt", w, b);
+        // Run gradient descent or load weights
+        boolean loadModel = false; // Set to true to load saved weights
+        double[] w = new double[n];
+        double b = 0.0;
+        
+        if (loadModel) {
+            System.out.println("Loading saved weights...");
+            Object[] loaded = ModelWeightsIO.loadDenseWeights("ml_c1w3_logistic_weights.txt");
+            if (loaded != null) {
+                w = ((double[][]) loaded[0])[0];
+                b = ((double[]) loaded[1])[0];
+            } else {
+                w = initialW;
+                b = initialB;
+            }
+        } else {
+            initialW = new double[n];
+            initialB = 0.0;
+            int iterations = 10000;
+            double alpha = 0.1;
+            double lambda = 0.0; // Unregularized for ex2data1
+    
+            System.out.println("Running gradient descent...");
+            Object[] wb = gradientDescent(xTrainNorm, yTrain, initialW, initialB, alpha, iterations, lambda);
+            w = (double[]) wb[0];
+            b = (double) wb[1];
+            System.out.printf("w found by gradient descent: [%.3f, %.3f]\n", w[0], w[1]);
+            System.out.printf("b found by gradient descent: %.3f\n\n", b);
+    
+            // Save the trained weights
+            ModelWeightsIO.saveWeights("ml_c1w3_logistic_weights.txt", w, b);
+        }
 
 
         // Predict

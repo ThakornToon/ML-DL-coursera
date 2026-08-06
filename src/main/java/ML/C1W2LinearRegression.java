@@ -137,18 +137,34 @@ public final class C1W2LinearRegression {
         System.out.println("Gradient at test w, b: " + grads[0] + " " + grads[1] + "\n");
 
         // Run gradient descent
-        initialW = 0.0;
-        initialB = 0.0;
-        int iterations = 1500;
-        double alpha = 0.01;
+        // Run gradient descent or load weights
+        boolean loadModel = false; // Set to true to load saved weights
+        double w, b;
+        
+        if (loadModel) {
+            System.out.println("Loading saved weights...");
+            Object[] loaded = ModelWeightsIO.loadDenseWeights("ml_c1w2_linear_weights.txt");
+            if (loaded != null) {
+                w = ((double[][]) loaded[0])[0][0];
+                b = ((double[]) loaded[1])[0];
+            } else {
+                w = initialW;
+                b = initialB;
+            }
+        } else {
+            initialW = 0.0;
+            initialB = 0.0;
+            int iterations = 1500;
+            double alpha = 0.01;
 
-        double[] wb = gradientDescent(xTrain, yTrain, initialW, initialB, alpha, iterations);
-        double w = wb[0];
-        double b = wb[1];
-        System.out.println("w,b found by gradient descent: " + w + " " + b + "\n");
+            double[] wb = gradientDescent(xTrain, yTrain, initialW, initialB, alpha, iterations);
+            w = wb[0];
+            b = wb[1];
+            System.out.println("w,b found by gradient descent: " + w + " " + b + "\n");
 
-        // Save the trained weights
-        ModelWeightsIO.saveWeights("ml_c1w2_linear_weights.txt", w, b);
+            // Save the trained weights
+            ModelWeightsIO.saveWeights("ml_c1w2_linear_weights.txt", w, b);
+        }
 
 
         // Predict

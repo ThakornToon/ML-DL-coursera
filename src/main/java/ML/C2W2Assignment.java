@@ -77,9 +77,22 @@ public final class C2W2Assignment {
             // Compile Model
             model.compile("adam", 0.001); 
             
-            System.out.println("\nTraining the model...");
-            // Python notebook trains for 40 epochs
-            model.fit(data.X, data.y, 40);
+            boolean loadModel = false; // Set to true to load existing model weights
+            
+            if (loadModel) {
+                System.out.println("\nLoading saved weights...");
+                for (ML.tools.Dense layer : model.getLayers()) {
+                    if (layer.getName() != null) {
+                        String filename = "ml_c2w2_assign_" + layer.getName() + "_weights.txt";
+                        Object[] loaded = ML.tools.ModelWeightsIO.loadDenseWeights(filename);
+                        if (loaded != null) layer.setWeights((double[][]) loaded[0], (double[]) loaded[1]);
+                    }
+                }
+            } else {
+                System.out.println("\nTraining the model...");
+                // Python notebook trains for 40 epochs
+                model.fit(data.X, data.y, 40);
+            }
             
             System.out.println();
             model.summary();

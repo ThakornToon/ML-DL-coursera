@@ -67,10 +67,10 @@ public final class C3W3A1Assignment {
         updateTargetNetwork(qNetwork, targetQNetwork, 1.0);
 
         LunarLanderEnv env = new LunarLanderEnv();
-        ReplayBuffer buffer = new ReplayBuffer(2000); // Small buffer for memory efficiency in Java
+        ReplayBuffer buffer = new ReplayBuffer(100000); // Increased buffer size for DQN stability
 
         // Hyperparameters
-        int numEpisodes = 500;
+        int numEpisodes = 30000;
         int maxStepsPerEpisode = 300;
         int batchSize = 64;
         double gamma = 0.995;
@@ -80,7 +80,7 @@ public final class C3W3A1Assignment {
 
         double epsilon = 1.0;
         double epsilonMin = 0.01;
-        double epsilonDecay = 0.995;
+        double epsilonDecay = 0.9995; // Slower decay for better exploration over long training
 
         int t = 1; // Optimizer step counter
 

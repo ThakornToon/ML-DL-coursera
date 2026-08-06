@@ -89,8 +89,21 @@ public final class C2W1Lab3CoffeeRoasting {
         // Since we are doing Full-Batch Gradient Descent (instead of mini-batch like Keras), 
         // we use a larger number of epochs (e.g. 2000) on the original 200 examples to converge.
         model.compile("adam", 0.01);
-        System.out.println("\nTraining the model...");
-        model.fit(Xn, Y, 4000);
+        boolean loadModel = false; // Set to true to load existing model weights
+        
+        if (loadModel) {
+            System.out.println("\nLoading saved weights...");
+            for (ML.tools.Dense layer : model.getLayers()) {
+                if (layer.getName() != null) {
+                    String filename = "ml_c2w1_layer" + layer.getName().replace("layer", "") + "_weights.txt";
+                    Object[] loaded = ML.tools.ModelWeightsIO.loadDenseWeights(filename);
+                    if (loaded != null) layer.setWeights((double[][]) loaded[0], (double[]) loaded[1]);
+                }
+            }
+        } else {
+            System.out.println("\nTraining the model...");
+            model.fit(Xn, Y, 4000);
+        }
         
         // Print model summary
         System.out.println();

@@ -72,10 +72,23 @@ public final class C2W1Assignment {
             model.compile("adam", 0.001); // Keras defaults
             
             System.out.println("\nTraining the model...");
-            // The python lab trains for 20 epochs using mini-batches of size 32.
-            // Our Java implementation uses full-batch gradient descent. 
-            // We need more epochs to converge. 2000 epochs should be sufficient.
-            model.fit(data.X, data.y, 2000);
+            boolean loadModel = false; // Set to true to load existing model weights
+            
+            if (loadModel) {
+                System.out.println("Loading saved weights...");
+                for (ML.tools.Dense layer : model.getLayers()) {
+                    if (layer.getName() != null) {
+                        String filename = "ml_c2w1_assign_" + layer.getName() + "_weights.txt";
+                        Object[] loaded = ML.tools.ModelWeightsIO.loadDenseWeights(filename);
+                        if (loaded != null) layer.setWeights((double[][]) loaded[0], (double[]) loaded[1]);
+                    }
+                }
+            } else {
+                // The python lab trains for 20 epochs using mini-batches of size 32.
+                // Our Java implementation uses full-batch gradient descent. 
+                // We need more epochs to converge. 2000 epochs should be sufficient.
+                model.fit(data.X, data.y, 2000);
+            }
             
             System.out.println();
             model.summary();
